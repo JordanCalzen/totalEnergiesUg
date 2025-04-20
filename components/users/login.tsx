@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { LoginProps } from "@/types/types";
 import { toast } from "sonner";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { Button } from "../ui/button";
 import { FaGithub, FaGoogle } from "react-icons/fa";
@@ -15,9 +15,6 @@ import PasswordInput from "../FormInputs/PasswordInput";
 import SubmitButton from "../FormInputs/SubmitButton";
 import CustomCarousel from "../frontend/custom-carousel";
 import Image from "next/image";
-// import CustomCarousel from "../frontend/custom-carousel";
-// import Logo from "../global/Logo";
-// import CustomCarousel from "../frontend/custom-carousel";
 export default function LoginForm() {
 	const [loading, setLoading] = useState(false);
 	const {
@@ -26,42 +23,42 @@ export default function LoginForm() {
 		formState: { errors },
 		reset,
 	} = useForm<LoginProps>();
-	const params = useSearchParams();
-	const returnUrl = params.get("returnUrl") || "/dashboard";
+	// const params = useSearchParams();
+	// const returnUrl = params.get("returnUrl") || "/dashboard";
 	const [passErr, setPassErr] = useState("");
 	const router = useRouter();
 	async function onSubmit(data: LoginProps) {
-		try {
-			setLoading(true);
-			setPassErr("");
-			console.log("Attempting to sign in with credentials:", data);
-			const loginData = await signIn("credentials", {
-				...data,
-				redirect: false,
-			});
-			console.log("SignIn response:", loginData);
-			if (loginData?.error) {
-				setLoading(false);
-				toast.error("Sign-in error", {
-					description:
-						"Please Check your credentials or Make sure you verified your email",
-				});
-				setPassErr("Wrong Credentials|Not Verified, Check again");
-				// setShowNotification(true);
-			} else {
-				// Sign-in was successful
-				// setShowNotification(false);
-				reset();
-				setLoading(false);
-				toast.success("Login Successful");
-				setPassErr("");
-				router.push(returnUrl);
-			}
-		} catch (error) {
-			setLoading(false);
-			console.error("Network Error:", error);
-			// toast.error("Its seems something is wrong with your Network");
-		}
+		// try {
+		// 	setLoading(true);
+		// 	setPassErr("");
+		// 	console.log("Attempting to sign in with credentials:", data);
+		// 	const loginData = await signIn("credentials", {
+		// 		...data,
+		// 		redirect: false,
+		// 	});
+		// 	console.log("SignIn response:", loginData);
+		// 	if (loginData?.error) {
+		// 		setLoading(false);
+		// 		toast.error("Sign-in error", {
+		// 			description:
+		// 				"Please Check your credentials or Make sure you verified your email",
+		// 		});
+		// 		setPassErr("Wrong Credentials|Not Verified, Check again");
+		// 		// setShowNotification(true);
+		// 	} else {
+		// 		// Sign-in was successful
+		// 		// setShowNotification(false);
+		// 		reset();
+		// 		setLoading(false);
+		// 		toast.success("Login Successful");
+		// 		setPassErr("");
+		// 		// router.push(returnUrl);
+		// 	}
+		// } catch (error) {
+		// 	setLoading(false);
+		// 	console.error("Network Error:", error);
+		// 	// toast.error("Its seems something is wrong with your Network");
+		// }
 	}
 	return (
 		<div className="w-full lg:grid h-screen lg:min-h-[600px] lg:grid-cols-2 relative ">
